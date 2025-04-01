@@ -22,36 +22,34 @@
 
     <script>
         function calculateCentering() {
-    let left = parseFloat(document.getElementById("leftBorder").value);
-    let right = parseFloat(document.getElementById("rightBorder").value);
+            let left = parseFloat(document.getElementById("leftBorder").value);
+            let right = parseFloat(document.getElementById("rightBorder").value);
 
-    if (left <= 0 || right <= 0) {
-        document.getElementById("grade").innerText = "Invalid input";
-        document.getElementById("leftPercentage").innerText = "";
-        document.getElementById("rightPercentage").innerText = "";
-        return;
-    }
+            if (left <= 0 || right <= 0) {
+                document.getElementById("grade").innerText = "Invalid input";
+                document.getElementById("leftPercentage").innerText = "";
+                document.getElementById("rightPercentage").innerText = "";
+                return;
+            }
 
-    let total = left + right;
-    let leftPercent = (left / total) * 100;
-    let rightPercent = (right / total) * 100;
+            let total = left + right;
+            let leftPercent = (left / total) * 100;
+            let rightPercent = (right / total) * 100;
+            let finalPercent = Math.max(leftPercent, rightPercent); // Determines the larger offset
 
-    // Determine the worst side's percentage offset from 50%
-    let centeringOffset = Math.abs(leftPercent - 50);
+            // Corrected grading system based on finalPercent
+            let centeringGrade;
+            if (finalPercent <= 55) centeringGrade = 10;
+            else if (finalPercent <= 60) centeringGrade = 9;
+            else if (finalPercent <= 65) centeringGrade = 8;
+            else if (finalPercent <= 70) centeringGrade = 7;
+            else if (finalPercent <= 75) centeringGrade = 6;
+            else centeringGrade = 5;
 
-    // Corrected grading system
-    let centeringGrade;
-    if (centeringOffset <= 5) centeringGrade = 10;  // 45/55 or better
-    else if (centeringOffset <= 10) centeringGrade = 9;  // 40/60 or better
-    else if (centeringOffset <= 15) centeringGrade = 8;  // 35/65 or better
-    else if (centeringOffset <= 20) centeringGrade = 7;  // 30/70 or better
-    else if (centeringOffset <= 25) centeringGrade = 6;  // 25/75 or better
-    else centeringGrade = 5;  // Worse than 25/75
-
-    document.getElementById("grade").innerText = centeringGrade;
-    document.getElementById("leftPercentage").innerText = leftPercent.toFixed(1);
-    document.getElementById("rightPercentage").innerText = rightPercent.toFixed(1);
-}
+            document.getElementById("grade").innerText = centeringGrade;
+            document.getElementById("leftPercentage").innerText = leftPercent.toFixed(1);
+            document.getElementById("rightPercentage").innerText = rightPercent.toFixed(1);
+        }
     </script>
 </body>
 </html>
